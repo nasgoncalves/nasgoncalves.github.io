@@ -1,6 +1,6 @@
 # Site settings
-title: nasgoncalves
-email: nuno.alberto.soares.goncalves@gmail.com
+title: 0x00000001
+email: nasgoncalves@live.com
 
 description: >
   Write an awesome description for your new site here. You can edit this
@@ -10,8 +10,8 @@ description: >
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://nasgoncalves.github.io"
 
-twitter_username: jekyllrb
-github_username:  jekyll
+twitter_username: nasgoncalves 
+github_username: nasgoncalves
 
 # Build settings
 markdown: kramdown
