@@ -1,4 +1,3 @@
-# Site settings
 title: '0x00000001'
 email: nasgoncalves@live.com
 
@@ -10,8 +9,7 @@ description: >
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://nasgoncalves.github.io"
 
-twitter_username: nasgoncalves 
+twitter_username: nasgoncalves
 github_username: nasgoncalves
 
-# Build settings
 markdown: kramdown
