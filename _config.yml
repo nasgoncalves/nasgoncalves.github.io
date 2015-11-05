@@ -1,15 +1,11 @@
-title: '0x00000001'
-email: nasgoncalves@live.com
+name: "Gereksiz"
+markdown: redcarpet
+highlighter: pygments
+permalink: :title
+exclude: [README.md, LICENSE, Makefile]
+baseurl: '/gereksiz'
 
-description: >
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://nasgoncalves.github.io"
-
-twitter_username: nasgoncalves
-github_username: nasgoncalves
-
-markdown: kramdown
+# Information for the Atom feed
+gereksiz:
+   author: "John Doe"
+   email: "john.doe@mail.sexy"
