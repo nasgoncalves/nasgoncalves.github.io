@@ -1,4 +1,4 @@
-name: "Gereksiz"
+name: "0x00000001"
 markdown: redcarpet
 highlighter: pygments
 permalink: :title
@@ -7,5 +7,5 @@ baseurl: 'http://nasgoncalves.github.io'
 
 # Information for the Atom feed
 gereksiz:
-   author: "John Doe"
-   email: "john.doe@mail.sexy"
+   author: "Nuno Goncalves"
+   email: "nuno.alberto.soares.goncalves@gmail.com"
