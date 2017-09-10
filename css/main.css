@@ -66,6 +66,7 @@ main {
 header a {
    font-weight: bold;
    text-decoration: none;
+   font-family: "Ubuntu", "Courier New", monospace;
 }
 
 /* the website's name on the header */
