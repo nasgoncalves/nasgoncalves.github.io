@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Ansible Splunk init Force Ulimits"
+title: "Ansible Splunk Init Force Ulimits"
 date: 2017-12-11 00:00:01
 ---
 
 ```yaml
-- name: read ulimit value
+- name: Read ulimit value
   shell: "cat /etc/security/limits.conf | grep 'hard nofile' | awk '{print $4}'"
   register: configured_ulimit
 
