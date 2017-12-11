@@ -40,7 +40,8 @@ date: 2017-12-11 00:00:01
 * [Checking if Hugepages are enabled in Linux
 ][r1]
 * [How to use, monitor, and disable transparent hugepages in Red Hat Enterprise Linux 6?][r2]
+* [Transparent Hugepage Support][r3]
 
 [r1]: https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/
 [r2]: https://access.redhat.com/solutions/46111
-
+[r3]: https://www.kernel.org/doc/Documentation/vm/transhuge.txt
