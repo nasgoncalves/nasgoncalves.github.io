@@ -66,7 +66,7 @@ main {
 header a {
    font-weight: bold;
    text-decoration: none;
-   font-family: "Ubuntu", "Courier New", monospace;
+   font-family: Monaco, "Courier New", monospace;
 }
 
 /* the website's name on the header */
@@ -167,11 +167,13 @@ footer {
 }
 
 footer #date {
+   font-family: Monaco, "Courier New", monospace;
    float: right;
 }
 
 footer #return,
 footer #date {
+   font-family: Monaco, "Courier New", monospace;
    overflow: hidden;
    text-overflow: ellipsis;
    white-space: nowrap;
