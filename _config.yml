@@ -1,6 +1,6 @@
 name: "0x00000001"
 markdown: redcarpet
-highlighter: pygments
+highlighter: rouge
 permalink: :title
 exclude: [README.md, LICENSE, Makefile]
 baseurl: ''

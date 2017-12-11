@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+   <title>0x00000001</title>
+   <link href="/atom.xml" rel="self"/>
+   <link href=""/>
+   <updated>2017-12-11T14:43:07+00:00</updated>
+   <id></id>
+   <author>
+      <name>Nuno Goncalves</name>
+      <email>nuno.alberto.soares.goncalves@gmail.com</email>
+   </author>
+
+   
+   <entry>
+      <title>Ansible Disable Transparent Hugepages Role</title>
+      <link href="/ansible-disable-transparent-hugepages-role"/>
+      <updated>2017-12-11T00:00:01+00:00</updated>
+      <id>/ansible-disable-transparent-hugepages-role</id>
+      <content type="html">&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Disable thp&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo 'never' &amp;gt; &quot;&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;with_items&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/transparent_hugepage/enabled&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/transparent_hugepage/defrag&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/redhat_transparent_hugepage/enabled&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/redhat_transparent_hugepage/defrag&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ignore_errors&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Disable thp after every init script had initialized&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;lineinfile&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/etc/rc.d/rc.local&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;insertafter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;EOF&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;present&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;if test -f ; then&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;echo never &amp;gt; &lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;fi&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;0744&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;with_items&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/transparent_hugepage/enabled&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/transparent_hugepage/defrag&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/redhat_transparent_hugepage/enabled&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/redhat_transparent_hugepage/defrag&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/&quot;&gt;Checking if Hugepages are enabled in Linux
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://access.redhat.com/solutions/46111&quot;&gt;How to use, monitor, and disable transparent hugepages in Red Hat Enterprise Linux 6?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+   </entry>
+   
+   <entry>
+      <title>Linux Application Memmory Leak Test</title>
+      <link href="/linux-app-memory-leak-test"/>
+      <updated>2017-12-11T00:00:00+00:00</updated>
+      <id>/linux-app-memory-leak-test</id>
+      <content type="html">&lt;h3&gt;With Deamon&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;valgrind --leak-check=full --log-file=&quot;logfile.out&quot; --trace-children=yes --track-origins=yes -v ./splunk start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Without Deamon&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;valgrind --leak-check=full --log-file=&quot;logfile.out&quot; -v ./splunk start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Results&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;==26829==  Uninitialised value was created by a stack allocation
+==26829==    at 0x125FED0: AesCcm192NonceGenerator::AesCcm192NonceGenerator() (in /data/splunk/bin/splunkd)
+
+==26829==  Uninitialised value was created by a stack allocation
+==26829==    at 0xA31AD6: FileInputTracker::fileHalfMd5(unsigned long*, FileDescriptor, Str const&amp;amp;, long, long) (in /data/splunk/bin/splunkd)
+
+==26829==  Uninitialised value was created by a stack allocation
+==26829==    at 0x126054D: AesCcm192Key::encrypt(StrSegment const&amp;amp;, AesCcm192Nonce const&amp;amp;, Str const&amp;amp;) const (in /data/splunk/bin/splunkd)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+   </entry>
+   
+</feed>

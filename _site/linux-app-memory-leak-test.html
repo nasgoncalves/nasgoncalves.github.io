@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Linux Application Memmory Leak Test</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+
+         <article>
+   <h2>Linux Application Memmory Leak Test</h2>
+   <h3>With Deamon</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">valgrind --leak-check=full --log-file="logfile.out" --trace-children=yes --track-origins=yes -v ./splunk start
+</code></pre></div>
+<h3>Without Deamon</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">valgrind --leak-check=full --log-file="logfile.out" -v ./splunk start
+</code></pre></div>
+<h3>Results</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">==26829==  Uninitialised value was created by a stack allocation
+==26829==    at 0x125FED0: AesCcm192NonceGenerator::AesCcm192NonceGenerator() (in /data/splunk/bin/splunkd)
+
+==26829==  Uninitialised value was created by a stack allocation
+==26829==    at 0xA31AD6: FileInputTracker::fileHalfMd5(unsigned long*, FileDescriptor, Str const&amp;, long, long) (in /data/splunk/bin/splunkd)
+
+==26829==  Uninitialised value was created by a stack allocation
+==26829==    at 0x126054D: AesCcm192Key::encrypt(StrSegment const&amp;, AesCcm192Nonce const&amp;, Str const&amp;) const (in /data/splunk/bin/splunkd)
+</code></pre></div>
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      11 Dec 2017
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>
