@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linux Application Memmory Leak Test"
+title: "Linux Application Memory Leak Test"
 date: 2017-12-11 00:00:00
 ---
 
