@@ -36,10 +36,6 @@ date: 2017-12-11 00:00:01
 
 ```
 
-- https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/
-
-- 
-
 
 * [Checking if Hugepages are enabled in Linux
 ][r1]
