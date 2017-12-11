@@ -4,7 +4,7 @@ title: "Ansible Disable Transparent Hugepages Role"
 date: 2017-12-11 00:00:01
 ---
 
-```YAML
+```
 - name: Disable thp
   shell: echo 'never' > "{{ item }}"
   with_items:
