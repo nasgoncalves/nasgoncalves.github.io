@@ -163,17 +163,16 @@ article img {
 }
 
 footer {
+   font-family: Monaco, "Courier New", monospace;
    height: 2.5em;
 }
 
 footer #date {
-   font-family: Monaco, "Courier New", monospace;
    float: right;
 }
 
 footer #return,
 footer #date {
-   font-family: Monaco, "Courier New", monospace;
    overflow: hidden;
    text-overflow: ellipsis;
    white-space: nowrap;
