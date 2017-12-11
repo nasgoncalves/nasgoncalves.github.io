@@ -35,3 +35,7 @@ date: 2017-12-11 00:00:01
   become: yes
 
 ```
+
+- https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/
+
+- https://access.redhat.com/solutions/46111 
