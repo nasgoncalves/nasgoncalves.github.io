@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ansible Splunk Init Force Ulimits"
+title: "Ansible Splunk Init Force ulimits & Transparent Huge Pages"
 date: 2017-12-11 00:00:01
 ---
 
@@ -13,7 +13,7 @@ date: 2017-12-11 00:00:01
     config_file: "/etc/init.d/splunk"
 
 - name: Add script init
-  blockinfile: 
+  blockinfile:
     dest: "{{ config_file }}"
     marker: "# {mark}"
     insertafter: "^splunk_start()*"

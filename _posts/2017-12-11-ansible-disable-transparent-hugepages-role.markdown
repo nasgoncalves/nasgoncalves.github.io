@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ansible Disable Transparent Hugepages Role"
+title: "Ansible Disable Transparent Huge Pages Role"
 date: 2017-12-11 00:00:01
 ---
 
