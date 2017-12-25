@@ -152,6 +152,7 @@ blockquote p {
 article {
    overflow: auto;
    word-wrap: break-word;
+   color: white;
 }
 
 article h2 {
