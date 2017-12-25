@@ -20,5 +20,5 @@ echo "0" > /proc/sys/net/ipv4/conf/<interface>/rp_filter
 echo "0" > /proc/sys/net/ipv4/conf/all/rp_filter
 ```
 
-* [Checking if Hugepages are enabled in Linux][r1]
+* [Redhat source validation][r1]
 [r1]: https://access.redhat.com/solutions/53031
