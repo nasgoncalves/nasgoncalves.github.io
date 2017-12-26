@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Ansible mkpasswd role</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+         <br />
+         <article>
+   <h2>Ansible mkpasswd role</h2>
+   <h3 id="defaultyml">default.yml</h3>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="pi">-</span> <span class="na">hosts</span><span class="pi">:</span> <span class="s">localhost</span>
+  <span class="na">pre_tasks</span><span class="pi">:</span>
+
+    <span class="pi">-</span> <span class="na">set_fact</span><span class="pi">:</span>
+        <span class="na">target_host</span><span class="pi">:</span> <span class="s2">"</span><span class="s">localhost"</span>
+
+  <span class="na">roles</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="pi">{</span> <span class="nv">role</span><span class="pi">:</span> <span class="nv">misc.mkpasswd</span><span class="pi">,</span>
+        <span class="nv">password_samples</span><span class="pi">:</span> <span class="nv">20</span><span class="pi">,</span>
+        <span class="nv">password_length</span><span class="pi">:</span> <span class="nv">40</span><span class="pi">,</span>
+        <span class="nv">target_host</span><span class="pi">:</span> <span class="s2">"</span><span class="s">localhost"</span><span class="pi">,</span>
+        <span class="nv">env</span><span class="pi">:</span> <span class="s1">'</span><span class="s">dev'</span> <span class="pi">}</span>
+
+    <span class="pi">-</span> <span class="s">misc.mkpasswd</span>
+
+  <span class="na">post_tasks</span><span class="pi">:</span>
+
+    <span class="pi">-</span> <span class="na">debug</span><span class="pi">:</span> <span class="s">msg="{{ misc_mkpasswd_rand_pw_string }}"</span>
+
+</code></pre></div></div>
+
+<h3 id="tasksmainyml">tasks/main.yml</h3>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Reset variables (password_samples)</span>
+  <span class="na">set_fact</span><span class="pi">:</span>
+    <span class="na">misc_mkpasswd_password_samples</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">(password_samples)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(20)</span><span class="nv"> </span><span class="s">}}"</span>
+  <span class="na">when</span><span class="pi">:</span> <span class="s">password_samples is defined and password_samples &gt; 0</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Reset variables (password_length)</span>
+  <span class="na">set_fact</span><span class="pi">:</span>
+    <span class="na">misc_mkpasswd_password_length</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">(password_length)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(20)</span><span class="nv"> </span><span class="s">}}"</span>
+  <span class="na">when</span><span class="pi">:</span> <span class="s">password_length is defined and password_length &gt; 0</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Reset variables (delegate_to)</span>
+  <span class="na">set_fact</span><span class="pi">:</span>
+    <span class="na">misc_mkpasswd_delegate_to</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">target_host</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default('localhost')</span><span class="nv"> </span><span class="s">}}"</span>
+  <span class="na">when</span><span class="pi">:</span> <span class="s">target_host is defined and (target_host | length) &gt; 0</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Reset variables (env)</span>
+  <span class="na">set_fact</span><span class="pi">:</span>
+    <span class="na">env</span><span class="pi">:</span> <span class="s1">'</span><span class="s">dev'</span>
+  <span class="na">when</span><span class="pi">:</span> <span class="s">not(env is defined)</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Reset variables</span>
+  <span class="na">set_fact</span><span class="pi">:</span>
+    <span class="na">misc_mkpasswd_rand_pw_string</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Generate new random password</span>
+  <span class="na">shell</span><span class="pi">:</span> <span class="s">&lt;/dev/urandom tr -dc '1234567890qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM*_!#&amp;$%' | head -c{{ misc_mkpasswd_password_length }}; echo</span>
+  <span class="na">register</span><span class="pi">:</span> <span class="s">misc_mkpasswd_rand_pw_string</span>
+  <span class="na">delegate_to</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">misc_mkpasswd_delegate_to</span><span class="nv"> </span><span class="s">}}"</span>
+  <span class="na">with_sequence</span><span class="pi">:</span> <span class="s">start=0 end={{ misc_mkpasswd_password_samples | int }}</span>
+  <span class="na">no_log</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">env</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">'dev'</span><span class="nv"> </span><span class="s">}}"</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Pick password</span>
+  <span class="na">set_fact</span><span class="pi">:</span>
+    <span class="na">misc_mkpasswd_rand_pw_string</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">misc_mkpasswd_rand_pw_string.results[misc_mkpasswd_password_samples</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">int</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">random].stdout</span><span class="nv"> </span><span class="s">}}"</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">The new password is</span>
+  <span class="na">debug</span><span class="pi">:</span>
+    <span class="na">msg</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">misc_mkpasswd_rand_pw_string</span><span class="nv"> </span><span class="s">}}"</span>
+  <span class="na">when</span><span class="pi">:</span> <span class="s">env == 'dev'</span>
+
+</code></pre></div></div>
+
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      20 Dec 2017
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>

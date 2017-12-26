@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Docker and Systemd</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+         <br />
+         <article>
+   <h2>Docker and Systemd</h2>
+   <h3 id="dockerfile">Dockerfile</h3>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> centos/systemd</span>
+
+<span class="k">RUN </span>yum <span class="nt">-y</span> install chrony<span class="p">;</span> yum clean all<span class="p">;</span> systemctl <span class="nb">enable </span>chronyd.service
+
+<span class="k">CMD</span><span class="s"> ["/usr/sbin/init"]</span>
+</code></pre></div></div>
+
+<h3 id="build">Build</h3>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">docker build --rm --no-cache -t nasgoncalves/centos7-systemd-chronyd .
+</span></code></pre></div></div>
+
+<h3 id="run">Run</h3>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">docker run --privileged --name centos7-baseline -v /sys/fs/cgroup:/sys/fs/cgroup:ro -d nasgoncalves/centos7-systemd-chronyd
+docker exec -it 8d1936faf8c8 /bin/bash
+</span></code></pre></div></div>
+
+<h3 id="checking">Checking</h3>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[root@8d1936faf8c8 /]#</span> systemctl status chronyd.service
+<span class="go">● chronyd.service - NTP client/server
+</span><span class="gp">   Loaded: loaded (/usr/lib/systemd/system/chronyd.service;</span> enabled<span class="p">;</span> vendor preset: enabled<span class="o">)</span>
+<span class="gp">   Active: active (running) since Sat 2017-12-16 18:44:23 UTC;</span> 16min ago
+<span class="go">     Docs: man:chronyd(8)
+           man:chrony.conf(5)
+  Process: 22 ExecStartPost=/usr/libexec/chrony-helper update-daemon (code=exited, status=0/SUCCESS)
+</span><span class="gp">  Process: 18 ExecStart=/usr/sbin/chronyd $</span>OPTIONS <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>0/SUCCESS<span class="o">)</span>
+<span class="go"> Main PID: 20 (chronyd)
+   CGroup: /docker/8d1936faf8c8b1e508c17ed86783880b4f3f7373450e561c102022f9db322313/system.slice/chronyd.service
+           └─20 /usr/sbin/chronyd
+
+Dec 16 18:44:23 8d1936faf8c8 systemd[1]: Starting NTP client/server...
+Dec 16 18:44:23 8d1936faf8c8 chronyd[20]: chronyd version 3.1 starting (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SECH...+DEBUG)
+Dec 16 18:44:23 8d1936faf8c8 systemd[1]: Started NTP client/server.
+Dec 16 18:44:28 8d1936faf8c8 chronyd[20]: Selected source 178.79.152.182
+Dec 16 18:45:34 8d1936faf8c8 chronyd[20]: Selected source 134.0.16.1
+Dec 16 18:46:48 8d1936faf8c8 chronyd[20]: Source 213.251.52.107 replaced with 85.199.214.100
+Hint: Some lines were ellipsized, use -l to show in full.
+</span><span class="gp">[root@8d1936faf8c8 /]#</span> watch <span class="nt">-n1</span> date
+<span class="gp">[root@8d1936faf8c8 /]#</span> date
+<span class="go">Sat Dec 16 19:00:56 UTC 2017
+</span><span class="gp">[root@8d1936faf8c8 /]#</span> chronyc sources
+<span class="go">210 Number of sources = 4
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^- ntp1.wirehive.net             2   6    17    60    -42ms[  -42ms] +/-   77ms
+</span><span class="gp">^* lond-web-1.speedwelshpoo&gt;</span>     2   6    17    60   +726us[+3937us] +/-   42ms
+<span class="go">^- duke.v4.colo.m.faelix.net     2   6    17    60  +2083us[+2083us] +/-   54ms
+^? 213.251.52.107                0   7     0     -     +0ns[   +0ns] +/-    0ns
+</span></code></pre></div></div>
+
+<ul>
+  <li><a href="https://hub.docker.com/r/centos/systemd/">centos/systemd</a></li>
+</ul>
+
+
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      16 Dec 2017
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>

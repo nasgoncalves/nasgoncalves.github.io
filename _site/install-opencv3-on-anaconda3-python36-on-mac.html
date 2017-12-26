@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Install OpenCV3 on Anaconda3 & python3.6 Mac</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+         <br />
+         <article>
+   <h2>Install OpenCV3 on Anaconda3 & python3.6 Mac</h2>
+   <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone https://github.com/opencv/opencv
+<span class="nv">$ </span>git clone https://github.com/opencv/opencv_contrib
+<span class="nv">$ </span><span class="nb">cd</span> ~/opencv
+<span class="nv">$ </span>mkdir build
+<span class="nv">$ </span><span class="nb">cd </span>build
+<span class="nv">$ </span>cmake <span class="nt">-D</span> <span class="nv">CMAKE_BUILD_TYPE</span><span class="o">=</span>RELEASE <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">PYTHON3_LIBRARY</span><span class="o">=</span>/Users/&lt;username&gt;/anaconda/envs/&lt;env&gt;/lib/libpython3.6m.dylib <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">PYTHON3_INCLUDE_DIR</span><span class="o">=</span>/Users/&lt;username&gt;/anaconda/envs/&lt;env&gt;/include/python3.6m/ <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">PYTHON_DEFAULT_EXECUTABLE</span><span class="o">=</span>/Users/&lt;username&gt;/anaconda/envs/&lt;env&gt;/bin/python3.6 <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">PYTHON_PACKAGES_PATH</span><span class="o">=</span>/Users/&lt;username&gt;/anaconda/envs/&lt;env&gt;/lib/python3.6/site-packages <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">INSTALL_C_EXAMPLES</span><span class="o">=</span>OFF <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">INSTALL_PYTHON_EXAMPLES</span><span class="o">=</span>ON <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">BUILD_EXAMPLES</span><span class="o">=</span>ON <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">BUILD_opencv_python3</span><span class="o">=</span>ON <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">BUILD_opencv_python2</span><span class="o">=</span>OFF <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">INCLUDE_DIRECTORIES</span><span class="o">=</span>/Users/&lt;username&gt;/anaconda/include/python3.6m/ <span class="se">\</span>
+        <span class="nt">-D</span> <span class="nv">OPENCV_EXTRA_MODULES_PATH</span><span class="o">=</span>../../opencv_contrib/modules ..
+<span class="nv">$ </span>make <span class="nt">-j4</span>
+<span class="nv">$ </span>make install
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python
+import cv2
+ImportError: No module named cv2
+</code></pre></div></div>
+
+<p>Fix python imports.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ~/opencv/lib/python3.6/site-packages
+<span class="nv">$ </span>mv cv2.cpython-36m-darwin.so cv2.so
+<span class="nv">$ </span>cp cv2.so /Users/&lt;username&gt;/anaconda3/lib/python3.6/site-packages
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">__version__</span>
+<span class="s">'3.2.0-dev'</span>
+</code></pre></div></div>
+
+<ul>
+  <li>[Can’t install OpenCV3 on Anaconda3 python3.6 on macOS][r1]
+[r1]: https://stackoverflow.com/questions/41873941/cant-install-opencv3-on-anaconda3-python3-6-on-macos/42704182#42704182</li>
+</ul>
+
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      24 Dec 2017
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>

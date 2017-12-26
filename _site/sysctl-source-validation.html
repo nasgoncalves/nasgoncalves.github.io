@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Sysctl source validation</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+         <br />
+         <article>
+   <h2>Sysctl source validation</h2>
+   <p>When a system distracts packets when the route for outbound traffic differs from the route of incoming traffic.</p>
+
+<h3 id="sysctlconf">sysctl.conf</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net.ipv4.conf.default.rp_filter <span class="o">=</span> 0
+net.ipv4.conf.&lt;interface&gt;.rp_filter <span class="o">=</span> 0
+net.ipv4.conf.all.rp_filter <span class="o">=</span> 0
+</code></pre></div></div>
+
+<h3 id="proc">/proc</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"0"</span> <span class="o">&gt;</span> /proc/sys/net/ipv4/conf/default/rp_filter
+<span class="nb">echo</span> <span class="s2">"0"</span> <span class="o">&gt;</span> /proc/sys/net/ipv4/conf/&lt;interface&gt;/rp_filter
+<span class="nb">echo</span> <span class="s2">"0"</span> <span class="o">&gt;</span> /proc/sys/net/ipv4/conf/all/rp_filter
+</code></pre></div></div>
+
+<ul>
+  <li>[Redhat source validation][r1]
+[r1]: https://access.redhat.com/solutions/53031</li>
+</ul>
+
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      23 Dec 2017
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>

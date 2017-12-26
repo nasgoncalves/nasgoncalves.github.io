@@ -10,7 +10,7 @@
       <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
       <link rel="icon" href="/favicon.ico" type="image/x-icon">
       <link rel="alternate" type="application/atom+xml" href="/atom.xml">
-      <title>Ansible Disable Transparent Hugepages Role</title>
+      <title>Ansible Disable Transparent Huge Pages Role</title>
    </head>
    
    <body>
@@ -18,10 +18,10 @@
          <header>
             <h1 class="title"><a href="/">0x00000001</a></h1>
          </header>
-
+         <br />
          <article>
-   <h2>Ansible Disable Transparent Hugepages Role</h2>
-   <div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Disable thp</span>
+   <h2>Ansible Disable Transparent Huge Pages Role</h2>
+   <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Disable thp</span>
   <span class="na">shell</span><span class="pi">:</span> <span class="s">echo 'never' &gt; ""</span>
   <span class="na">with_items</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="s">/sys/kernel/mm/transparent_hugepage/enabled</span>
@@ -50,12 +50,15 @@
     <span class="pi">-</span> <span class="s">/sys/kernel/mm/redhat_transparent_hugepage/defrag</span>
   <span class="na">become</span><span class="pi">:</span> <span class="s">yes</span>
 
-</code></pre></div>
+</code></pre></div></div>
+
 <ul>
-<li><a href="https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/">Checking if Hugepages are enabled in Linux
+  <li><a href="https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/">Checking if Hugepages are enabled in Linux
 </a></li>
-<li><a href="https://access.redhat.com/solutions/46111">How to use, monitor, and disable transparent hugepages in Red Hat Enterprise Linux 6?</a></li>
+  <li><a href="https://access.redhat.com/solutions/46111">How to use, monitor, and disable transparent hugepages in Red Hat Enterprise Linux 6?</a></li>
+  <li><a href="https://www.kernel.org/doc/Documentation/vm/transhuge.txt">Transparent Hugepage Support</a></li>
 </ul>
+
 
 </article>
 

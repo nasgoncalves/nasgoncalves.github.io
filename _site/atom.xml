@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
    <title>0x00000001</title>
-   <link href="/atom.xml" rel="self"/>
-   <link href=""/>
-   <updated>2017-12-11T14:43:07+00:00</updated>
-   <id></id>
+   <link href="http://localhost:4000/atom.xml" rel="self"/>
+   <link href="http://localhost:4000"/>
+   <updated>2017-12-26T00:43:40+00:00</updated>
+   <id>http://localhost:4000</id>
    <author>
       <name>Nuno Goncalves</name>
       <email>nuno.alberto.soares.goncalves@gmail.com</email>
@@ -12,11 +12,262 @@
 
    
    <entry>
-      <title>Ansible Disable Transparent Hugepages Role</title>
-      <link href="/ansible-disable-transparent-hugepages-role"/>
+      <title>Install OpenCV3 on Anaconda3 & python3.6 Mac</title>
+      <link href="http://localhost:4000/install-opencv3-on-anaconda3-python36-on-mac"/>
+      <updated>2017-12-24T00:00:01+00:00</updated>
+      <id>http://localhost:4000/install-opencv3-on-anaconda3-python36-on-mac</id>
+      <content type="html">&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone https://github.com/opencv/opencv
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone https://github.com/opencv/opencv_contrib
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/opencv
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir build
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;build
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;cmake &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;CMAKE_BUILD_TYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;RELEASE &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;PYTHON3_LIBRARY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/Users/&amp;lt;username&amp;gt;/anaconda/envs/&amp;lt;env&amp;gt;/lib/libpython3.6m.dylib &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;PYTHON3_INCLUDE_DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/Users/&amp;lt;username&amp;gt;/anaconda/envs/&amp;lt;env&amp;gt;/include/python3.6m/ &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;PYTHON_DEFAULT_EXECUTABLE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/Users/&amp;lt;username&amp;gt;/anaconda/envs/&amp;lt;env&amp;gt;/bin/python3.6 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;PYTHON_PACKAGES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/Users/&amp;lt;username&amp;gt;/anaconda/envs/&amp;lt;env&amp;gt;/lib/python3.6/site-packages &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;INSTALL_C_EXAMPLES&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;OFF &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;INSTALL_PYTHON_EXAMPLES&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ON &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;BUILD_EXAMPLES&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ON &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;BUILD_opencv_python3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ON &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;BUILD_opencv_python2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;OFF &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;INCLUDE_DIRECTORIES&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/Users/&amp;lt;username&amp;gt;/anaconda/include/python3.6m/ &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;OPENCV_EXTRA_MODULES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;../../opencv_contrib/modules ..
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make &lt;span class=&quot;nt&quot;&gt;-j4&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python
+import cv2
+ImportError: No module named cv2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Fix python imports.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/opencv/lib/python3.6/site-packages
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mv cv2.cpython-36m-darwin.so cv2.so
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;cp cv2.so /Users/&amp;lt;username&amp;gt;/anaconda3/lib/python3.6/site-packages
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;cv2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__version__&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'3.2.0-dev'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[Can’t install OpenCV3 on Anaconda3 python3.6 on macOS][r1]
+[r1]: https://stackoverflow.com/questions/41873941/cant-install-opencv3-on-anaconda3-python3-6-on-macos/42704182#42704182&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+   </entry>
+   
+   <entry>
+      <title>Sysctl source validation</title>
+      <link href="http://localhost:4000/sysctl-source-validation"/>
+      <updated>2017-12-23T00:00:01+00:00</updated>
+      <id>http://localhost:4000/sysctl-source-validation</id>
+      <content type="html">&lt;p&gt;When a system distracts packets when the route for outbound traffic differs from the route of incoming traffic.&lt;/p&gt;
+
+&lt;h3 id=&quot;sysctlconf&quot;&gt;sysctl.conf&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;net.ipv4.conf.default.rp_filter &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0
+net.ipv4.conf.&amp;lt;interface&amp;gt;.rp_filter &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0
+net.ipv4.conf.all.rp_filter &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;proc&quot;&gt;/proc&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /proc/sys/net/ipv4/conf/default/rp_filter
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /proc/sys/net/ipv4/conf/&amp;lt;interface&amp;gt;/rp_filter
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /proc/sys/net/ipv4/conf/all/rp_filter
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[Redhat source validation][r1]
+[r1]: https://access.redhat.com/solutions/53031&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+   </entry>
+   
+   <entry>
+      <title>Ansible mkpasswd role</title>
+      <link href="http://localhost:4000/ansible-mkpasswd-role"/>
+      <updated>2017-12-20T00:00:01+00:00</updated>
+      <id>http://localhost:4000/ansible-mkpasswd-role</id>
+      <content type="html">&lt;h3 id=&quot;defaultyml&quot;&gt;default.yml&lt;/h3&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;localhost&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;pre_tasks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;target_host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;localhost&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;roles&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;misc.mkpasswd&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;password_samples&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;password_length&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;target_host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;localhost&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dev'&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;misc.mkpasswd&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;post_tasks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;msg=&quot;{{ misc_mkpasswd_rand_pw_string }}&quot;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;tasksmainyml&quot;&gt;tasks/main.yml&lt;/h3&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Reset variables (password_samples)&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;misc_mkpasswd_password_samples&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(password_samples)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;default(20)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;password_samples is defined and password_samples &amp;gt; 0&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Reset variables (password_length)&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;misc_mkpasswd_password_length&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(password_length)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;default(20)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;password_length is defined and password_length &amp;gt; 0&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Reset variables (delegate_to)&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;misc_mkpasswd_delegate_to&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;target_host&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;default('localhost')&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;target_host is defined and (target_host | length) &amp;gt; 0&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Reset variables (env)&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dev'&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not(env is defined)&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Reset variables&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;misc_mkpasswd_rand_pw_string&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Generate new random password&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;/dev/urandom tr -dc '1234567890qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM*_!#&amp;amp;$%' | head -c{{ misc_mkpasswd_password_length }}; echo&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;misc_mkpasswd_rand_pw_string&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;delegate_to&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;misc_mkpasswd_delegate_to&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;with_sequence&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;start=0 end={{ misc_mkpasswd_password_samples | int }}&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;no_log&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'dev'&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Pick password&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;misc_mkpasswd_rand_pw_string&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;misc_mkpasswd_rand_pw_string.results[misc_mkpasswd_password_samples&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;random].stdout&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;The new password is&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;misc_mkpasswd_rand_pw_string&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;env == 'dev'&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+   </entry>
+   
+   <entry>
+      <title>Docker and Systemd</title>
+      <link href="http://localhost:4000/docker-and-systemd"/>
+      <updated>2017-12-16T00:00:00+00:00</updated>
+      <id>http://localhost:4000/docker-and-systemd</id>
+      <content type="html">&lt;h3 id=&quot;dockerfile&quot;&gt;Dockerfile&lt;/h3&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; centos/systemd&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; install chrony&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; yum clean all&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;chronyd.service
+
+&lt;span class=&quot;k&quot;&gt;CMD&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; [&quot;/usr/sbin/init&quot;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;build&quot;&gt;Build&lt;/h3&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;docker build --rm --no-cache -t nasgoncalves/centos7-systemd-chronyd .
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;run&quot;&gt;Run&lt;/h3&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;docker run --privileged --name centos7-baseline -v /sys/fs/cgroup:/sys/fs/cgroup:ro -d nasgoncalves/centos7-systemd-chronyd
+docker exec -it 8d1936faf8c8 /bin/bash
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;checking&quot;&gt;Checking&lt;/h3&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;[root@8d1936faf8c8 /]#&lt;/span&gt; systemctl status chronyd.service
+&lt;span class=&quot;go&quot;&gt;● chronyd.service - NTP client/server
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;   Loaded: loaded (/usr/lib/systemd/system/chronyd.service;&lt;/span&gt; enabled&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; vendor preset: enabled&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;   Active: active (running) since Sat 2017-12-16 18:44:23 UTC;&lt;/span&gt; 16min ago
+&lt;span class=&quot;go&quot;&gt;     Docs: man:chronyd(8)
+           man:chrony.conf(5)
+  Process: 22 ExecStartPost=/usr/libexec/chrony-helper update-daemon (code=exited, status=0/SUCCESS)
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;  Process: 18 ExecStart=/usr/sbin/chronyd $&lt;/span&gt;OPTIONS &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;exited, &lt;span class=&quot;nv&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0/SUCCESS&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt; Main PID: 20 (chronyd)
+   CGroup: /docker/8d1936faf8c8b1e508c17ed86783880b4f3f7373450e561c102022f9db322313/system.slice/chronyd.service
+           └─20 /usr/sbin/chronyd
+
+Dec 16 18:44:23 8d1936faf8c8 systemd[1]: Starting NTP client/server...
+Dec 16 18:44:23 8d1936faf8c8 chronyd[20]: chronyd version 3.1 starting (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SECH...+DEBUG)
+Dec 16 18:44:23 8d1936faf8c8 systemd[1]: Started NTP client/server.
+Dec 16 18:44:28 8d1936faf8c8 chronyd[20]: Selected source 178.79.152.182
+Dec 16 18:45:34 8d1936faf8c8 chronyd[20]: Selected source 134.0.16.1
+Dec 16 18:46:48 8d1936faf8c8 chronyd[20]: Source 213.251.52.107 replaced with 85.199.214.100
+Hint: Some lines were ellipsized, use -l to show in full.
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;[root@8d1936faf8c8 /]#&lt;/span&gt; watch &lt;span class=&quot;nt&quot;&gt;-n1&lt;/span&gt; date
+&lt;span class=&quot;gp&quot;&gt;[root@8d1936faf8c8 /]#&lt;/span&gt; date
+&lt;span class=&quot;go&quot;&gt;Sat Dec 16 19:00:56 UTC 2017
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;[root@8d1936faf8c8 /]#&lt;/span&gt; chronyc sources
+&lt;span class=&quot;go&quot;&gt;210 Number of sources = 4
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^- ntp1.wirehive.net             2   6    17    60    -42ms[  -42ms] +/-   77ms
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;^* lond-web-1.speedwelshpoo&amp;gt;&lt;/span&gt;     2   6    17    60   +726us[+3937us] +/-   42ms
+&lt;span class=&quot;go&quot;&gt;^- duke.v4.colo.m.faelix.net     2   6    17    60  +2083us[+2083us] +/-   54ms
+^? 213.251.52.107                0   7     0     -     +0ns[   +0ns] +/-    0ns
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://hub.docker.com/r/centos/systemd/&quot;&gt;centos/systemd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+      <title>Ansible Splunk Init Force ulimits & Transparent Huge Pages</title>
+      <link href="http://localhost:4000/ansible-splunk-init-force-ulimits"/>
       <updated>2017-12-11T00:00:01+00:00</updated>
-      <id>/ansible-disable-transparent-hugepages-role</id>
-      <content type="html">&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Disable thp&lt;/span&gt;
+      <id>http://localhost:4000/ansible-splunk-init-force-ulimits</id>
+      <content type="html">&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Read ulimit value&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;cat&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/etc/security/limits.conf&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hard&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;nofile'&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;awk&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'{print&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$4}'&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;configured_ulimit&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;set_fact&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;config_file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/etc/init.d/splunk&quot;&lt;/span&gt;
+
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Add script init&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;blockinfile&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{mark}&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;insertafter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;^splunk_start()*&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;echo Assert ulimits...&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;ulimit -Hn &lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;ulimit -Sn &lt;/span&gt;
+
+        &lt;span class=&quot;no&quot;&gt;echo Assert THP at boot time&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;if test -f /sys/kernel/mm/redhat_transparent_hugepage/enabled; then&lt;/span&gt;
+          &lt;span class=&quot;no&quot;&gt;echo never &amp;gt; /sys/kernel/mm/redhat_transparent_hugepage/enabled&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;fi&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;if test -f /sys/kernel/mm/redhat_transparent_hugepage/defrag; then&lt;/span&gt;
+          &lt;span class=&quot;no&quot;&gt;echo never &amp;gt; /sys/kernel/mm/redhat_transparent_hugepage/defrag&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;fi&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;notify&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Restart Splunk&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+   </entry>
+   
+   <entry>
+      <title>Ansible Disable Transparent Huge Pages Role</title>
+      <link href="http://localhost:4000/ansible-disable-transparent-hugepages-role"/>
+      <updated>2017-12-11T00:00:01+00:00</updated>
+      <id>http://localhost:4000/ansible-disable-transparent-hugepages-role</id>
+      <content type="html">&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Disable thp&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo 'never' &amp;gt; &quot;&quot;&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;with_items&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/transparent_hugepage/enabled&lt;/span&gt;
@@ -45,28 +296,36 @@
     &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/sys/kernel/mm/redhat_transparent_hugepage/defrag&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/&quot;&gt;Checking if Hugepages are enabled in Linux
+  &lt;li&gt;&lt;a href=&quot;https://techoverflow.net/2013/08/01/checking-if-hugepages-are-enabled-in-linux/&quot;&gt;Checking if Hugepages are enabled in Linux
 &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://access.redhat.com/solutions/46111&quot;&gt;How to use, monitor, and disable transparent hugepages in Red Hat Enterprise Linux 6?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://access.redhat.com/solutions/46111&quot;&gt;How to use, monitor, and disable transparent hugepages in Red Hat Enterprise Linux 6?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.kernel.org/doc/Documentation/vm/transhuge.txt&quot;&gt;Transparent Hugepage Support&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
 </content>
    </entry>
    
    <entry>
-      <title>Linux Application Memmory Leak Test</title>
-      <link href="/linux-app-memory-leak-test"/>
+      <title>Linux Application Memory Leak Test</title>
+      <link href="http://localhost:4000/linux-app-memory-leak-test"/>
       <updated>2017-12-11T00:00:00+00:00</updated>
-      <id>/linux-app-memory-leak-test</id>
-      <content type="html">&lt;h3&gt;With Deamon&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;valgrind --leak-check=full --log-file=&quot;logfile.out&quot; --trace-children=yes --track-origins=yes -v ./splunk start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;Without Deamon&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;valgrind --leak-check=full --log-file=&quot;logfile.out&quot; -v ./splunk start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;Results&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;==26829==  Uninitialised value was created by a stack allocation
+      <id>http://localhost:4000/linux-app-memory-leak-test</id>
+      <content type="html">&lt;h3 id=&quot;with-deamon&quot;&gt;With Deamon&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;valgrind --leak-check=full --log-file=&quot;logfile.out&quot; --trace-children=yes --track-origins=yes -v ./splunk start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;without-deamon&quot;&gt;Without Deamon&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;valgrind --leak-check=full --log-file=&quot;logfile.out&quot; -v ./splunk start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;==26829==  Uninitialised value was created by a stack allocation
 ==26829==    at 0x125FED0: AesCcm192NonceGenerator::AesCcm192NonceGenerator() (in /data/splunk/bin/splunkd)
 
 ==26829==  Uninitialised value was created by a stack allocation
@@ -74,7 +333,8 @@
 
 ==26829==  Uninitialised value was created by a stack allocation
 ==26829==    at 0x126054D: AesCcm192Key::encrypt(StrSegment const&amp;amp;, AesCcm192Nonce const&amp;amp;, Str const&amp;amp;) const (in /data/splunk/bin/splunkd)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
    </entry>
    
 </feed>

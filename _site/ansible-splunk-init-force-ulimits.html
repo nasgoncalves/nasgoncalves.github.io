@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Ansible Splunk Init Force ulimits & Transparent Huge Pages</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+         <br />
+         <article>
+   <h2>Ansible Splunk Init Force ulimits & Transparent Huge Pages</h2>
+   <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Read ulimit value</span>
+  <span class="na">shell</span><span class="pi">:</span> <span class="s2">"</span><span class="s">cat</span><span class="nv"> </span><span class="s">/etc/security/limits.conf</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">grep</span><span class="nv"> </span><span class="s">'hard</span><span class="nv"> </span><span class="s">nofile'</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">awk</span><span class="nv"> </span><span class="s">'{print</span><span class="nv"> </span><span class="s">$4}'"</span>
+  <span class="na">register</span><span class="pi">:</span> <span class="s">configured_ulimit</span>
+
+<span class="pi">-</span> <span class="na">set_fact</span><span class="pi">:</span>
+    <span class="na">config_file</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/etc/init.d/splunk"</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Add script init</span>
+  <span class="na">blockinfile</span><span class="pi">:</span>
+    <span class="na">dest</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+    <span class="na">marker</span><span class="pi">:</span> <span class="s2">"</span><span class="s">#</span><span class="nv"> </span><span class="s">{mark}"</span>
+    <span class="na">insertafter</span><span class="pi">:</span> <span class="s2">"</span><span class="s">^splunk_start()*"</span>
+    <span class="na">content</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="no">echo Assert ulimits...</span>
+        <span class="no">ulimit -Hn </span>
+        <span class="no">ulimit -Sn </span>
+
+        <span class="no">echo Assert THP at boot time</span>
+        <span class="no">if test -f /sys/kernel/mm/redhat_transparent_hugepage/enabled; then</span>
+          <span class="no">echo never &gt; /sys/kernel/mm/redhat_transparent_hugepage/enabled</span>
+        <span class="no">fi</span>
+        <span class="no">if test -f /sys/kernel/mm/redhat_transparent_hugepage/defrag; then</span>
+          <span class="no">echo never &gt; /sys/kernel/mm/redhat_transparent_hugepage/defrag</span>
+        <span class="no">fi</span>
+  <span class="na">notify</span><span class="pi">:</span> <span class="s">Restart Splunk</span>
+</code></pre></div></div>
+
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      11 Dec 2017
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>
