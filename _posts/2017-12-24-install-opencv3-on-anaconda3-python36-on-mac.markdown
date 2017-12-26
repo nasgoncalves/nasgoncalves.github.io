@@ -48,4 +48,5 @@ cv2.__version__
 ```
 
 * [Can't install OpenCV3 on Anaconda3 python3.6 on macOS][r1]
-[r1]: https://stackoverflow.com/questions/41873941/cant-install-opencv3-on-anaconda3-python3-6-on-macos/42704182#42704182
+
+[r1]:https://stackoverflow.com/questions/41873941/cant-install-opencv3-on-anaconda3-python3-6-on-macos/42704182#42704182
