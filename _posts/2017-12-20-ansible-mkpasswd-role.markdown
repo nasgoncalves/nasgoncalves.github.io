@@ -23,24 +23,24 @@ date: 2017-12-20 00:00:01
 
   post_tasks:
 
-    - debug: msg="{{ misc_mkpasswd_rand_pw_string }}"
+    - debug: msg="\{{ misc_mkpasswd_rand_pw_string \}}"
 ```
 
 ### tasks/main.yml
 ```yaml
 - name: Reset variables (password_samples)
   set_fact:
-    misc_mkpasswd_password_samples: "{{ (password_samples) | default(20) }}"
+    misc_mkpasswd_password_samples: "\{{ (password_samples) | default(20) \}}"
   when: password_samples is defined and password_samples > 0
 
 - name: Reset variables (password_length)
   set_fact:
-    misc_mkpasswd_password_length: "{{ (password_length) | default(20) }}"
+    misc_mkpasswd_password_length: "\{{ (password_length) | default(20) \}}"
   when: password_length is defined and password_length > 0
 
 - name: Reset variables (delegate_to)
   set_fact:
-    misc_mkpasswd_delegate_to: "{{ target_host | default('localhost') }}"
+    misc_mkpasswd_delegate_to: "\{{ target_host | default('localhost') \}}"
   when: target_host is defined and (target_host | length) > 0
 
 - name: Reset variables (env)
@@ -53,18 +53,18 @@ date: 2017-12-20 00:00:01
     misc_mkpasswd_rand_pw_string: ''
 
 - name: Generate new random password
-  shell: </dev/urandom tr -dc '1234567890qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM*_!#&$%' | head -c{{ misc_mkpasswd_password_length }}; echo
+  shell: </dev/urandom tr -dc '1234567890qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM*_!#&$%' | head -c\{{ misc_mkpasswd_password_length \}}; echo
   register: misc_mkpasswd_rand_pw_string
-  delegate_to: "{{ misc_mkpasswd_delegate_to }}"
-  with_sequence: start=0 end={{ misc_mkpasswd_password_samples | int }}
-  no_log: "{{ env == 'dev' }}"
+  delegate_to: "\{{ misc_mkpasswd_delegate_to \}}"
+  with_sequence: start=0 end=\{{ misc_mkpasswd_password_samples | int \}}
+  no_log: "\{{ env == 'dev' \}}"
 
 - name: Pick password
   set_fact:
-    misc_mkpasswd_rand_pw_string: "{{ misc_mkpasswd_rand_pw_string.results[misc_mkpasswd_password_samples | int | random].stdout }}"
+    misc_mkpasswd_rand_pw_string: "\{{ misc_mkpasswd_rand_pw_string.results[misc_mkpasswd_password_samples | int | random].stdout \}}"
 
 - name: The new password is
   debug:
-    msg: "{{ misc_mkpasswd_rand_pw_string }}"
+    msg: "\{{ misc_mkpasswd_rand_pw_string \}}"
   when: env == 'dev'
 ```
