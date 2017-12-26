@@ -24,6 +24,3 @@ echo "0" > /proc/sys/net/ipv4/conf/all/rp_filter
 ```bash
 hping <target> --spoof <spoofed_source> --udp -V -p <port> -d $(wc -m payload |  awk '{print $1;}') -E payload
 ```
-
-* [Redhat source validation][r1]
-[r1]: https://access.redhat.com/solutions/53031
