@@ -9,8 +9,6 @@ date: 2017-12-16 00:00:00
 ```dockerfile
 FROM centos/systemd
 
-LABEL mantainer="nuno.alberto.soares.goncalves@gmail.com"
-
 RUN yum -y install chrony; yum clean all; systemctl enable chronyd.service
 
 CMD ["/usr/sbin/init"]
