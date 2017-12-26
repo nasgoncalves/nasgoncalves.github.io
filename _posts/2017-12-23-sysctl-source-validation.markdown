@@ -20,5 +20,10 @@ echo "0" > /proc/sys/net/ipv4/conf/<interface>/rp_filter
 echo "0" > /proc/sys/net/ipv4/conf/all/rp_filter
 ```
 
+### test config
+```bash
+hping <target> --spoof <spoofed_source> --udp -V -p <port> -d $(wc -m payload) -E payload
+```
+
 * [Redhat source validation][r1]
 [r1]: https://access.redhat.com/solutions/53031
