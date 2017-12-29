@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Test Ansible Roles using molecule and goss</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+         <br />
+         <article>
+   <h2>Test Ansible Roles using molecule and goss</h2>
+   <p><br /></p>
+
+<p><a href="https://github.com/nasgoncalves/r-nasg.dummy">Github Project</a></p>
+
+<h2 id="preparation">Preparation</h2>
+
+<p>Create new python environment if you are using python 3 (molecule at this point only supports python 2.7).</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>conda create <span class="nt">-n</span> ansible <span class="nv">python</span><span class="o">=</span>2.7
+<span class="nv">$ </span><span class="c"># for some reson molecule doesn't install</span>
+<span class="nv">$ </span><span class="c"># functools_lru_cache automagically</span>
+<span class="nv">$ </span><span class="nb">source </span>activate ansible
+<span class="nv">$ </span>pip install ansible molecule docker-py backports.functools_lru_cache
+<span class="nv">$ </span><span class="c"># install goss</span>
+<span class="nv">$ </span>curl <span class="nt">-fsSL</span> https://goss.rocks/install | sh
+</code></pre></div></div>
+<p><br /></p>
+
+<h2 id="setup">Setup</h2>
+
+<p>Create a some role with ansible-galaxy,…</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>ansible<span class="o">)</span> <span class="nv">$ </span>ansible-galaxy init r-nasg.dummy
+</code></pre></div></div>
+<p>Create your default playbook (default.yml) with the following content:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="pi">-</span> <span class="na">hosts</span><span class="pi">:</span> <span class="s">localhost</span>
+  <span class="na">roles</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">r-nasg.dummy</span>
+
+</code></pre></div></div>
+
+<p>In the tasks file (tasks/main.yml) add something simple just to test the concept…</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Add flag</span>
+  <span class="na">blockinfile</span><span class="pi">:</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">/root/ansible-flag</span>
+    <span class="na">create</span><span class="pi">:</span> <span class="s">yes</span>
+    <span class="na">block</span><span class="pi">:</span> <span class="pi">|</span>
+      <span class="no">flag</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="create-tests">Create tests</h2>
+
+<p>Create the tests using molecule using the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>ansible<span class="o">)</span> <span class="nv">$ </span><span class="c"># molecule init scenario -r &lt;role-name&gt; -s &lt;scenario-name&gt; -d &lt;driver (docker | vagrant | etc.)&gt; --verifier-name &lt;(goss | testinfra | etc.)&gt;</span>
+<span class="o">(</span>ansible<span class="o">)</span> <span class="nv">$ </span>molecule init scenario <span class="nt">-r</span> r-nasg.dummy <span class="nt">-s</span> default <span class="nt">-d</span> docker <span class="nt">--verifier-name</span> goss
+</code></pre></div></div>
+
+<p>molecule will create a series of folders and files, open the tests file (playbook_dir/molecule/default/tests/test_default.yml) and add the following:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">file</span><span class="pi">:</span>
+  <span class="s">/root/ansible-flag</span><span class="pi">:</span>
+    <span class="na">exists</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">owner</span><span class="pi">:</span> <span class="s">root</span>
+    <span class="na">group</span><span class="pi">:</span> <span class="s">root</span>
+    <span class="na">contains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">flag</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="run-tests">Run tests</h2>
+
+<p>Finally run:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>ansible<span class="o">)</span> <span class="nv">$ </span>molecule <span class="nb">test</span>
+</code></pre></div></div>
+<p>Output:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+<span class="s2">"msg"</span>: <span class="o">[</span>
+    <span class="s2">"File: /root/ansible-flag: exists: matches expectation: [true]"</span>,
+    <span class="s2">"File: /root/ansible-flag: owner: matches expectation: [</span><span class="se">\"</span><span class="s2">root</span><span class="se">\"</span><span class="s2">]"</span>,
+    <span class="s2">"File: /root/ansible-flag: group: matches expectation: [</span><span class="se">\"</span><span class="s2">root</span><span class="se">\"</span><span class="s2">]"</span>,
+    <span class="s2">"File: /root/ansible-flag: contains: matches expectation: [flag]"</span>,
+    <span class="s2">""</span>,
+    <span class="s2">""</span>,
+    <span class="s2">"Total Duration: 0.001s"</span>,
+    <span class="s2">"Count: 4, Failed: 0, Skipped: 0"</span>
+<span class="o">]</span>
+...
+</code></pre></div></div>
+
+<h3 id="notes">Notes</h3>
+
+<p>You can always skip ansible-lint check in any taks uou pick add the tag <code class="highlighter-rouge">skip_ansible_lint</code> in the <code class="highlighter-rouge">tags</code> statement.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">tags</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">skip_ansible_lint</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="refs">Refs</h3>
+
+<ul>
+  <li><a href="https://github.com/metacloud/molecule">molecule</a></li>
+  <li><a href="https://github.com/aelsabbahy/goss">goss</a></li>
+  <li><a href="https://github.com/philpep/testinfra">testinfra</a></li>
+</ul>
+
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      29 Dec 2017
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>

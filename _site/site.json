@@ -1,6 +1,12 @@
 [
 
 {
+   "title": "Test Ansible Roles using molecule and goss",
+   "date":  "2017-12-29 00:00:01 +0000",
+   "url":   "/test-ansible-molecule-goss"
+},
+
+{
    "title": "Install OpenCV3 on Anaconda3 & python3.6 Mac",
    "date":  "2017-12-24 00:00:01 +0000",
    "url":   "/install-opencv3-on-anaconda3-python36-on-mac"
