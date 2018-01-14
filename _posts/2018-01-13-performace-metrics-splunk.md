@@ -113,7 +113,7 @@ LoadPlugin write_http
 
 ### inputs.conf
 
-```
+```ini
 [http]
 port = 8088
 disabled = 0
@@ -129,7 +129,7 @@ outputgroup = INDEXER
 
 ### outputs.conf
 
-```
+```ini
 [indexAndForward]
 index = false
 
@@ -143,14 +143,14 @@ maxQueueSize = 50MB
 
 ### inputs.conf
 
-```
+```ini
 [splunktcp://9997]
 index =  collectd
 ```
 
 ### indexers.conf
 
-```
+```ini
 [collectd]
 datatype   = metric
 homePath   = $SPLUNK_DB/collectd/db
@@ -187,7 +187,7 @@ LoadPlugin write_graphite
 
 ### inputs.conf
 
-```
+```ini
 [tcp://9997]
 index = collectd
 sourcetype = graphite_collectd
@@ -196,7 +196,7 @@ outputgroup = INDEXER
 
 ### outputs.conf
 
-```
+```ini
 [indexAndForward]
 index = false
 
@@ -210,14 +210,14 @@ maxQueueSize = 50MB
 
 ### inputs.conf
 
-```
+```ini
 [splunktcp://9997]
 index =  collectd
 ```
 
 ### indexers.conf
 
-```
+```ini
 [collectd]
 homePath   = $SPLUNK_DB/collectd/db
 coldPath   = $SPLUNK_DB/collectd/colddb
@@ -226,7 +226,7 @@ thawedPath = $SPLUNK_DB/collectd/thaweddb
 
 ### props.conf
 
-```
+```ini
 [graphite_collectd]
 TIME_PREFIX = ^.+\..+\..+\s.+\s
 EXTRACT-metric_value = ^(?P<host>[^\.]+)[^\.\n]*\.(?P<object>[^\.]+)\.(?P<metric>[^ ]+)\s+(?P<value>[^ ]+)
@@ -247,7 +247,7 @@ EVAL-host = replace(host,"_",".")
 
 ### transforms.conf
 
-```
+```ini
 [mask-collectd1]
 REGEX = ^([^_]+)\..+\..+\s.+\s.+
 DEST_KEY = MetaData:Host

@@ -3,7 +3,7 @@
    <title>0x00000001</title>
    <link href="http://localhost:4000/atom.xml" rel="self"/>
    <link href="http://localhost:4000"/>
-   <updated>2018-01-14T22:43:14+00:00</updated>
+   <updated>2018-01-14T23:36:40+00:00</updated>
    <id>http://localhost:4000</id>
    <author>
       <name>Nuno Goncalves</name>
@@ -14,7 +14,7 @@
    <entry>
       <title>Performance Metrics & Splunk</title>
       <link href="http://localhost:4000/performace-metrics-splunk"/>
-      <updated>2018-01-13T00:00:01+00:00</updated>
+      <updated>2018-01-13T00:00:02+00:00</updated>
       <id>http://localhost:4000/performace-metrics-splunk</id>
       <content type="html">&lt;h3 id=&quot;install--configure-collectd&quot;&gt;Install &amp;amp; configure collectd&lt;/h3&gt;
 
@@ -122,45 +122,45 @@ LoadPlugin uptime
 
 &lt;h3 id=&quot;inputsconf&quot;&gt;inputs.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[http]
-port = 8088
-disabled = 0
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[http]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;8088&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;0&lt;/span&gt;
 
-[http://collectd]
-token = &amp;lt;guid&amp;gt;
-disabled=0
-index=collectd
-source=collectd token
-sourcetype=collectd_http
-outputgroup = INDEXER
+&lt;span class=&quot;nn&quot;&gt;[http://collectd]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;guid&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;disabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;collectd&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;collectd token&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sourcetype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;collectd_http&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;outputgroup&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;INDEXER&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;outputsconf&quot;&gt;outputs.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[indexAndForward]
-index = false
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[indexAndForward]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
 
-[tcpout:INDEXER]
-server = &amp;lt;indexer_ip&amp;gt;:&amp;lt;indexer_port&amp;gt;
-useACK=false
-maxQueueSize = 50MB
+&lt;span class=&quot;nn&quot;&gt;[tcpout:INDEXER]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;indexer_ip&amp;gt;:&amp;lt;indexer_port&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;useACK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;maxQueueSize&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;50MB&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;indexer-configuration&quot;&gt;Indexer Configuration&lt;/h2&gt;
 
 &lt;h3 id=&quot;inputsconf-1&quot;&gt;inputs.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[splunktcp://9997]
-index =  collectd
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[splunktcp://9997]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;collectd&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;indexersconf&quot;&gt;indexers.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[collectd]
-datatype   = metric
-homePath   = $SPLUNK_DB/collectd/db
-coldPath   = $SPLUNK_DB/collectd/colddb
-thawedPath = $SPLUNK_DB/collectd/thaweddb
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[collectd]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;datatype&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;metric&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;homePath&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$SPLUNK_DB/collectd/db&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;coldPath&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$SPLUNK_DB/collectd/colddb&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;thawedPath&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$SPLUNK_DB/collectd/thaweddb&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
@@ -191,105 +191,105 @@ thawedPath = $SPLUNK_DB/collectd/thaweddb
 
 &lt;h3 id=&quot;inputsconf-2&quot;&gt;inputs.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[tcp://9997]
-index = collectd
-sourcetype = graphite_collectd
-outputgroup = INDEXER
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[tcp://9997]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;collectd&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sourcetype&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;graphite_collectd&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;outputgroup&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;INDEXER&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;outputsconf-1&quot;&gt;outputs.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[indexAndForward]
-index = false
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[indexAndForward]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
 
-[tcpout:INDEXER]
-server = &amp;lt;indexer_ip&amp;gt;:&amp;lt;indexer_port&amp;gt;
-useACK=false
-maxQueueSize = 50MB
+&lt;span class=&quot;nn&quot;&gt;[tcpout:INDEXER]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;indexer_ip&amp;gt;:&amp;lt;indexer_port&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;useACK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;maxQueueSize&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;50MB&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;indexer-configuration-1&quot;&gt;Indexer Configuration&lt;/h2&gt;
 
 &lt;h3 id=&quot;inputsconf-3&quot;&gt;inputs.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[splunktcp://9997]
-index =  collectd
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[splunktcp://9997]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;collectd&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;indexersconf-1&quot;&gt;indexers.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[collectd]
-homePath   = $SPLUNK_DB/collectd/db
-coldPath   = $SPLUNK_DB/collectd/colddb
-thawedPath = $SPLUNK_DB/collectd/thaweddb
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[collectd]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;homePath&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$SPLUNK_DB/collectd/db&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;coldPath&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$SPLUNK_DB/collectd/colddb&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;thawedPath&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$SPLUNK_DB/collectd/thaweddb&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;propsconf&quot;&gt;props.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[graphite_collectd]
-TIME_PREFIX = ^.+\..+\..+\s.+\s
-EXTRACT-metric_value = ^(?P&amp;lt;host&amp;gt;[^\.]+)[^\.\n]*\.(?P&amp;lt;object&amp;gt;[^\.]+)\.(?P&amp;lt;metric&amp;gt;[^ ]+)\s+(?P&amp;lt;value&amp;gt;[^ ]+)
-EXTRACT-metric_kv = ^(?P&amp;lt;host&amp;gt;[^\.]+)[^\.\n]*\.(?P&amp;lt;object&amp;gt;[^\.]+)\.(?P&amp;lt;_KEY_1&amp;gt;[^ ]+)\s+(?P&amp;lt;_VAL_1&amp;gt;[^ ]+)
-SHOULD_LINEMERGE=false
-TRANSFORMS-mask1= mask-collectd1
-TRANSFORMS-mask2= mask-collectd2
-TRANSFORMS-mask3= mask-collectd3
-TRANSFORMS-mask4= mask-collectd4
-TRANSFORMS-mask5= mask-collectd5
-TRANSFORMS-mask6= mask-collectd6
-TRANSFORMS-mask7= mask-collectd7
-TRANSFORMS-mask8= mask-collectd8
-TRANSFORMS-mask9= mask-collectd9
-EVAL-host = replace(host,&quot;_&quot;,&quot;.&quot;)
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[graphite_collectd]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TIME_PREFIX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;EXTRACT-metric_value&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^(?P&amp;lt;host&amp;gt;[^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]+)[^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]*&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(?P&amp;lt;object&amp;gt;[^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(?P&amp;lt;metric&amp;gt;[^ ]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;+(?P&amp;lt;value&amp;gt;[^ ]+)&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;EXTRACT-metric_kv&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^(?P&amp;lt;host&amp;gt;[^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]+)[^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]*&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(?P&amp;lt;object&amp;gt;[^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(?P&amp;lt;_KEY_1&amp;gt;[^ ]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;+(?P&amp;lt;_VAL_1&amp;gt;[^ ]+)&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;SHOULD_LINEMERGE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd1&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd2&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd3&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd4&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd5&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd6&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd7&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd8&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;TRANSFORMS-mask9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mask-collectd9&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;EVAL-host&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;replace(host,&quot;_&quot;,&quot;.&quot;)&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;transformsconf&quot;&gt;transforms.conf&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[mask-collectd1]
-REGEX = ^([^_]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$1
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[mask-collectd1]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$1&lt;/span&gt;
 
-[mask-collectd2]
-REGEX = ^([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd2]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$2.$1&lt;/span&gt;
 
-[mask-collectd3]
-REGEX = ^([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$3.$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd3]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$3.$2.$1&lt;/span&gt;
 
-[mask-collectd4]
-REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$4.$3.$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd4]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_]+)_([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$4.$3.$2.$1&lt;/span&gt;
 
-[mask-collectd5]
-REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$5.$4.$3.$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd5]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$5.$4.$3.$2.$1&lt;/span&gt;
 
-[mask-collectd6]
-REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$6.$5.$4.$3.$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd6]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$6.$5.$4.$3.$2.$1&lt;/span&gt;
 
-[mask-collectd7]
-REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$7.$6.$5.$4.$3.$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd7]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$7.$6.$5.$4.$3.$2.$1&lt;/span&gt;
 
-[mask-collectd8]
-REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$8.$7.$6.$5.$4.$3.$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd8]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$8.$7.$6.$5.$4.$3.$2.$1&lt;/span&gt;
 
-[mask-collectd9]
-REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
-DEST_KEY = MetaData:Host
-FORMAT =  host::$9.$8.$7.$6.$5.$4.$3.$2.$1
+&lt;span class=&quot;nn&quot;&gt;[mask-collectd9]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;REGEX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.+&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;DEST_KEY&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MetaData:Host&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;FORMAT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;host::$9.$8.$7.$6.$5.$4.$3.$2.$1&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
