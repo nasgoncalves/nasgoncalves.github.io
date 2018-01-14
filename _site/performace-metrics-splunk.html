@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="0x00000001">
+      <meta name="author" content="NASG">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+      <title>Performance Metrics & Splunk</title>
+   </head>
+   
+   <body>
+      <main>
+         <header>
+            <h1 class="title"><a href="/">0x00000001</a></h1>
+         </header>
+         <br />
+         <article>
+   <h2>Performance Metrics & Splunk</h2>
+   <h3 id="install--configure-collectd">Install &amp; configure collectd</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install <span class="nt">-y</span> epel-release
+yum install <span class="nt">-y</span> collectd policycoreutils-python
+setsebool <span class="nt">-P</span> collectd_tcp_network_connect 1
+semanage permissive <span class="nt">-a</span> collectd_t
+service collectd restart
+</code></pre></div></div>
+
+<h3 id="etccollectdconf">/etc/collectd.conf</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FQDNLookup false
+LoadPlugin logfile
+LoadPlugin cpu
+LoadPlugin df
+LoadPlugin disk
+LoadPlugin interface
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin processes
+LoadPlugin protocols
+LoadPlugin swap
+LoadPlugin tcpconns
+#LoadPlugin thermal
+LoadPlugin uptime
+
+&lt;Plugin memory&gt;
+  ValuesAbsolute true
+  ValuesPercentage true
+&lt;/Plugin&gt;
+
+&lt;Plugin swap&gt;
+  ReportByDevice true
+  ValuesPercentage true
+&lt;/Plugin&gt;
+
+&lt;Plugin df&gt;
+  ReportByDevice true
+  ValuesPercentage true
+&lt;/Plugin&gt;
+
+&lt;Plugin logfile&gt;
+  LogLevel info
+  File "/var/log/collectd.log"
+  Timestamp true
+  PrintSeverity false
+&lt;/Plugin&gt;
+
+&lt;Plugin load&gt;
+  ReportRelative true
+&lt;/Plugin&gt;
+
+&lt;Plugin processes&gt;
+  ProcessMatch "all" "(.*)"
+&lt;/Plugin&gt;
+
+&lt;Plugin cpu&gt;
+  ValuesPercentage true
+&lt;/Plugin&gt;
+
+&lt;Plugin interface&gt;
+  Interface "lo"
+  IgnoreSelected false
+  ReportInactive true
+  UniqueName false
+&lt;/Plugin&gt;
+
+&lt;Plugin protocols&gt;
+  Value "/^Tcp:/"
+  IgnoreSelected false
+&lt;/Plugin&gt;
+
+&lt;Plugin tcpconns&gt;
+  ListeningPorts true
+  AllPortsSummary true
+&lt;/Plugin&gt;
+
+</code></pre></div></div>
+
+<h1 id="collectd-to-splunk-hec">Collectd to Splunk HEC</h1>
+
+<h1 id="workflow">Workflow</h1>
+<p>[System] -&gt; [Splunk HF HEC] -&gt; [Splunk Indexer]</p>
+
+<h2 id="system-configuration">System Configuration</h2>
+
+<h3 id="etccollectddhecconf">/etc/collectd.d/hec.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LoadPlugin write_http
+
+&lt;Plugin write_http&gt;
+  &lt;Node "HEC"&gt;
+    URL "https://&lt;splunk-hec&gt;:8088/services/collector/raw"
+    Header "Authorization: Splunk &lt;token&gt;"
+    Format "JSON"
+    VerifyPeer false
+    VerifyHost false
+    Metrics true
+    StoreRates true
+  &lt;/Node&gt;
+&lt;/Plugin&gt;
+</code></pre></div></div>
+
+<h2 id="hf-hec-configuration">HF HEC Configuration</h2>
+
+<h3 id="inputsconf">inputs.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[http]
+port = 8088
+disabled = 0
+
+[http://collectd]
+token = &lt;guid&gt;
+disabled=0
+index=collectd
+source=collectd token
+sourcetype=collectd_http
+outputgroup = INDEXER
+</code></pre></div></div>
+
+<h3 id="outputsconf">outputs.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[indexAndForward]
+index = false
+
+[tcpout:INDEXER]
+server = &lt;indexer_ip&gt;:&lt;indexer_port&gt;
+useACK=false
+maxQueueSize = 50MB
+</code></pre></div></div>
+
+<h2 id="indexer-configuration">Indexer Configuration</h2>
+
+<h3 id="inputsconf-1">inputs.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[splunktcp://9997]
+index =  collectd
+</code></pre></div></div>
+
+<h3 id="indexersconf">indexers.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[collectd]
+datatype   = metric
+homePath   = $SPLUNK_DB/collectd/db
+coldPath   = $SPLUNK_DB/collectd/colddb
+thawedPath = $SPLUNK_DB/collectd/thaweddb
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="collectd-to-splunk-tcp">Collectd to Splunk TCP</h1>
+
+<h2 id="workflow-1">Workflow</h2>
+<p>[System] -&gt; [Splunk HF TCP] -&gt; [Splunk Indexer]</p>
+
+<p><br /></p>
+
+<h2 id="system-configuration-1">System Configuration</h2>
+
+<h3 id="etccollectddtcpconf">/etc/collectd.d/tcp.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LoadPlugin write_graphite
+
+&lt;Plugin write_graphite&gt;
+  &lt;Carbon&gt;
+    Host "&lt;splunk-hf&gt;"
+    Port "9997"
+    Protocol "tcp"
+  &lt;/Carbon&gt;
+&lt;/Plugin&gt;
+</code></pre></div></div>
+
+<h2 id="hf-tcp-configuration">HF TCP Configuration</h2>
+
+<h3 id="inputsconf-2">inputs.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[tcp://9997]
+index = collectd
+sourcetype = graphite_collectd
+outputgroup = INDEXER
+</code></pre></div></div>
+
+<h3 id="outputsconf-1">outputs.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[indexAndForward]
+index = false
+
+[tcpout:INDEXER]
+server = &lt;indexer_ip&gt;:&lt;indexer_port&gt;
+useACK=false
+maxQueueSize = 50MB
+</code></pre></div></div>
+
+<h2 id="indexer-configuration-1">Indexer Configuration</h2>
+
+<h3 id="inputsconf-3">inputs.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[splunktcp://9997]
+index =  collectd
+</code></pre></div></div>
+
+<h3 id="indexersconf-1">indexers.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[collectd]
+homePath   = $SPLUNK_DB/collectd/db
+coldPath   = $SPLUNK_DB/collectd/colddb
+thawedPath = $SPLUNK_DB/collectd/thaweddb
+</code></pre></div></div>
+
+<h3 id="propsconf">props.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[graphite_collectd]
+TIME_PREFIX = ^.+\..+\..+\s.+\s
+EXTRACT-metric_value = ^(?P&lt;host&gt;[^\.]+)[^\.\n]*\.(?P&lt;object&gt;[^\.]+)\.(?P&lt;metric&gt;[^ ]+)\s+(?P&lt;value&gt;[^ ]+)
+EXTRACT-metric_kv = ^(?P&lt;host&gt;[^\.]+)[^\.\n]*\.(?P&lt;object&gt;[^\.]+)\.(?P&lt;_KEY_1&gt;[^ ]+)\s+(?P&lt;_VAL_1&gt;[^ ]+)
+SHOULD_LINEMERGE=false
+TRANSFORMS-mask1= mask-collectd1
+TRANSFORMS-mask2= mask-collectd2
+TRANSFORMS-mask3= mask-collectd3
+TRANSFORMS-mask4= mask-collectd4
+TRANSFORMS-mask5= mask-collectd5
+TRANSFORMS-mask6= mask-collectd6
+TRANSFORMS-mask7= mask-collectd7
+TRANSFORMS-mask8= mask-collectd8
+TRANSFORMS-mask9= mask-collectd9
+EVAL-host = replace(host,"_",".")
+
+</code></pre></div></div>
+
+<h3 id="transformsconf">transforms.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[mask-collectd1]
+REGEX = ^([^_]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$1
+
+[mask-collectd2]
+REGEX = ^([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$2.$1
+
+[mask-collectd3]
+REGEX = ^([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$3.$2.$1
+
+[mask-collectd4]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$4.$3.$2.$1
+
+[mask-collectd5]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$5.$4.$3.$2.$1
+
+[mask-collectd6]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$6.$5.$4.$3.$2.$1
+
+[mask-collectd7]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$7.$6.$5.$4.$3.$2.$1
+
+[mask-collectd8]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$8.$7.$6.$5.$4.$3.$2.$1
+
+[mask-collectd9]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$9.$8.$7.$6.$5.$4.$3.$2.$1
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="bonus-collectd-to-splunk-csv-monitor">Bonus: Collectd to Splunk CSV monitor</h1>
+
+<h2 id="workflow-2">Workflow</h2>
+<p>[System] -&gt; [Splunk HF Monitor] -&gt; [Splunk Indexer]</p>
+
+<h3 id="collectd-csv-plugin-usrlocallibcollectdpythonpython_csv_pluginpy">collectd csv plugin (/usr/local/lib/collectd/python/python_csv_plugin.py)</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">collectd</span>
+
+<span class="n">COLLECTD_METRCIS_LOG</span> <span class="o">=</span> <span class="s">"/var/log/collectd-metrics.log"</span>
+
+<span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="n">ObjConfiguration</span><span class="p">):</span>
+    <span class="n">collectd</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Configuring'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="n">collectd</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Initialization'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">vl</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+      <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s">"</span><span class="si">%</span><span class="s">s,</span><span class="si">%</span><span class="s">s,</span><span class="si">%</span><span class="s">s,</span><span class="si">%</span><span class="s">s,</span><span class="si">%</span><span class="s">s,</span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> \
+                <span class="p">(</span><span class="n">vl</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">vl</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">vl</span><span class="o">.</span><span class="n">plugin</span><span class="p">,</span> \
+                <span class="n">vl</span><span class="o">.</span><span class="nb">type</span><span class="p">,</span> <span class="n">vl</span><span class="o">.</span><span class="n">plugin_instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> \
+                <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">vl</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">COLLECTD_METRCIS_LOG</span><span class="p">,</span> <span class="s">'a+'</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+              <span class="n">csvfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+<span class="n">collectd</span><span class="o">.</span><span class="n">register_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">collectd</span><span class="o">.</span><span class="n">register_init</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+<span class="n">collectd</span><span class="o">.</span><span class="n">register_write</span><span class="p">(</span><span class="n">write</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="etccollectddcsvconf">/etc/collectd.d/csv.conf</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LoadPlugin python
+
+&lt;Plugin python&gt;
+  ModulePath "/usr/local/lib/collectd/python"
+  LogTraces true
+  Interactive false
+  Import python_csv_plugin
+  &lt;Module python_csv_plugin&gt;
+  &lt;/Module&gt;
+&lt;/Plugin&gt;
+</code></pre></div></div>
+
+<p>Log Sample (/var/log/collectd-metrics.log):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1515962589.16,system,processes,ps_rss,collectd,12378112.0
+1515962589.16,system,processes,ps_vm,collectd,1015365632.0
+1515962589.16,system,processes,ps_stacksize,collectd,2176.0
+1515962589.16,system,processes,ps_cputime,collectd,600000
+1515962589.16,system,processes,ps_cputime,collectd,1150000
+1515962589.16,system,processes,ps_code,collectd,15937536.0
+1515962589.16,system,processes,ps_pagefaults,collectd,11078
+1515962589.16,system,processes,ps_pagefaults,collectd,0
+1515962589.16,system,processes,io_octets,collectd,2785618
+1515962589.16,system,processes,io_octets,collectd,503948
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="refs">Refs</h1>
+
+<ul>
+  <li><a href="https://splunkbase.splunk.com/app/2875/">Collectd App for Splunk Enterprise</a></li>
+  <li><a href="http://docs.splunk.com/Documentation/AddOns/released/Linux/Configure">Configure Collectd to send data to Splunk</a></li>
+  <li><a href="https://www.splunk.com/blog/2013/07/26/getting-data-from-collectd-into-splunk.html">Getting Data from Collectd or Graphite into Splunk</a></li>
+  <li><a href="https://splunkbase.splunk.com/app/3777/">Analytics for Linux</a></li>
+</ul>
+
+</article>
+
+<footer>
+   <div id="date" class="meta">
+      13 Jan 2018
+   </div>
+   <div id="return">
+      <a href="/">&lt;&lt;&lt;</a>
+   </div>
+</footer>
+
+      </main>
+   </body>
+</html>

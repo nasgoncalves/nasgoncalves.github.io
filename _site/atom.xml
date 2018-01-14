@@ -3,13 +3,370 @@
    <title>0x00000001</title>
    <link href="http://localhost:4000/atom.xml" rel="self"/>
    <link href="http://localhost:4000"/>
-   <updated>2017-12-29T21:53:38+00:00</updated>
+   <updated>2018-01-14T22:43:14+00:00</updated>
    <id>http://localhost:4000</id>
    <author>
       <name>Nuno Goncalves</name>
       <email>nuno.alberto.soares.goncalves@gmail.com</email>
    </author>
 
+   
+   <entry>
+      <title>Performance Metrics & Splunk</title>
+      <link href="http://localhost:4000/performace-metrics-splunk"/>
+      <updated>2018-01-13T00:00:01+00:00</updated>
+      <id>http://localhost:4000/performace-metrics-splunk</id>
+      <content type="html">&lt;h3 id=&quot;install--configure-collectd&quot;&gt;Install &amp;amp; configure collectd&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum install &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; epel-release
+yum install &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; collectd policycoreutils-python
+setsebool &lt;span class=&quot;nt&quot;&gt;-P&lt;/span&gt; collectd_tcp_network_connect 1
+semanage permissive &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; collectd_t
+service collectd restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;etccollectdconf&quot;&gt;/etc/collectd.conf&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FQDNLookup false
+LoadPlugin logfile
+LoadPlugin cpu
+LoadPlugin df
+LoadPlugin disk
+LoadPlugin interface
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin processes
+LoadPlugin protocols
+LoadPlugin swap
+LoadPlugin tcpconns
+#LoadPlugin thermal
+LoadPlugin uptime
+
+&amp;lt;Plugin memory&amp;gt;
+  ValuesAbsolute true
+  ValuesPercentage true
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin swap&amp;gt;
+  ReportByDevice true
+  ValuesPercentage true
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin df&amp;gt;
+  ReportByDevice true
+  ValuesPercentage true
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin logfile&amp;gt;
+  LogLevel info
+  File &quot;/var/log/collectd.log&quot;
+  Timestamp true
+  PrintSeverity false
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin load&amp;gt;
+  ReportRelative true
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin processes&amp;gt;
+  ProcessMatch &quot;all&quot; &quot;(.*)&quot;
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin cpu&amp;gt;
+  ValuesPercentage true
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin interface&amp;gt;
+  Interface &quot;lo&quot;
+  IgnoreSelected false
+  ReportInactive true
+  UniqueName false
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin protocols&amp;gt;
+  Value &quot;/^Tcp:/&quot;
+  IgnoreSelected false
+&amp;lt;/Plugin&amp;gt;
+
+&amp;lt;Plugin tcpconns&amp;gt;
+  ListeningPorts true
+  AllPortsSummary true
+&amp;lt;/Plugin&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;collectd-to-splunk-hec&quot;&gt;Collectd to Splunk HEC&lt;/h1&gt;
+
+&lt;h1 id=&quot;workflow&quot;&gt;Workflow&lt;/h1&gt;
+&lt;p&gt;[System] -&amp;gt; [Splunk HF HEC] -&amp;gt; [Splunk Indexer]&lt;/p&gt;
+
+&lt;h2 id=&quot;system-configuration&quot;&gt;System Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;etccollectddhecconf&quot;&gt;/etc/collectd.d/hec.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadPlugin write_http
+
+&amp;lt;Plugin write_http&amp;gt;
+  &amp;lt;Node &quot;HEC&quot;&amp;gt;
+    URL &quot;https://&amp;lt;splunk-hec&amp;gt;:8088/services/collector/raw&quot;
+    Header &quot;Authorization: Splunk &amp;lt;token&amp;gt;&quot;
+    Format &quot;JSON&quot;
+    VerifyPeer false
+    VerifyHost false
+    Metrics true
+    StoreRates true
+  &amp;lt;/Node&amp;gt;
+&amp;lt;/Plugin&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;hf-hec-configuration&quot;&gt;HF HEC Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;inputsconf&quot;&gt;inputs.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[http]
+port = 8088
+disabled = 0
+
+[http://collectd]
+token = &amp;lt;guid&amp;gt;
+disabled=0
+index=collectd
+source=collectd token
+sourcetype=collectd_http
+outputgroup = INDEXER
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;outputsconf&quot;&gt;outputs.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[indexAndForward]
+index = false
+
+[tcpout:INDEXER]
+server = &amp;lt;indexer_ip&amp;gt;:&amp;lt;indexer_port&amp;gt;
+useACK=false
+maxQueueSize = 50MB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;indexer-configuration&quot;&gt;Indexer Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;inputsconf-1&quot;&gt;inputs.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[splunktcp://9997]
+index =  collectd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;indexersconf&quot;&gt;indexers.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[collectd]
+datatype   = metric
+homePath   = $SPLUNK_DB/collectd/db
+coldPath   = $SPLUNK_DB/collectd/colddb
+thawedPath = $SPLUNK_DB/collectd/thaweddb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;collectd-to-splunk-tcp&quot;&gt;Collectd to Splunk TCP&lt;/h1&gt;
+
+&lt;h2 id=&quot;workflow-1&quot;&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;[System] -&amp;gt; [Splunk HF TCP] -&amp;gt; [Splunk Indexer]&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;system-configuration-1&quot;&gt;System Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;etccollectddtcpconf&quot;&gt;/etc/collectd.d/tcp.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadPlugin write_graphite
+
+&amp;lt;Plugin write_graphite&amp;gt;
+  &amp;lt;Carbon&amp;gt;
+    Host &quot;&amp;lt;splunk-hf&amp;gt;&quot;
+    Port &quot;9997&quot;
+    Protocol &quot;tcp&quot;
+  &amp;lt;/Carbon&amp;gt;
+&amp;lt;/Plugin&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;hf-tcp-configuration&quot;&gt;HF TCP Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;inputsconf-2&quot;&gt;inputs.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[tcp://9997]
+index = collectd
+sourcetype = graphite_collectd
+outputgroup = INDEXER
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;outputsconf-1&quot;&gt;outputs.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[indexAndForward]
+index = false
+
+[tcpout:INDEXER]
+server = &amp;lt;indexer_ip&amp;gt;:&amp;lt;indexer_port&amp;gt;
+useACK=false
+maxQueueSize = 50MB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;indexer-configuration-1&quot;&gt;Indexer Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;inputsconf-3&quot;&gt;inputs.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[splunktcp://9997]
+index =  collectd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;indexersconf-1&quot;&gt;indexers.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[collectd]
+homePath   = $SPLUNK_DB/collectd/db
+coldPath   = $SPLUNK_DB/collectd/colddb
+thawedPath = $SPLUNK_DB/collectd/thaweddb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;propsconf&quot;&gt;props.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[graphite_collectd]
+TIME_PREFIX = ^.+\..+\..+\s.+\s
+EXTRACT-metric_value = ^(?P&amp;lt;host&amp;gt;[^\.]+)[^\.\n]*\.(?P&amp;lt;object&amp;gt;[^\.]+)\.(?P&amp;lt;metric&amp;gt;[^ ]+)\s+(?P&amp;lt;value&amp;gt;[^ ]+)
+EXTRACT-metric_kv = ^(?P&amp;lt;host&amp;gt;[^\.]+)[^\.\n]*\.(?P&amp;lt;object&amp;gt;[^\.]+)\.(?P&amp;lt;_KEY_1&amp;gt;[^ ]+)\s+(?P&amp;lt;_VAL_1&amp;gt;[^ ]+)
+SHOULD_LINEMERGE=false
+TRANSFORMS-mask1= mask-collectd1
+TRANSFORMS-mask2= mask-collectd2
+TRANSFORMS-mask3= mask-collectd3
+TRANSFORMS-mask4= mask-collectd4
+TRANSFORMS-mask5= mask-collectd5
+TRANSFORMS-mask6= mask-collectd6
+TRANSFORMS-mask7= mask-collectd7
+TRANSFORMS-mask8= mask-collectd8
+TRANSFORMS-mask9= mask-collectd9
+EVAL-host = replace(host,&quot;_&quot;,&quot;.&quot;)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;transformsconf&quot;&gt;transforms.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[mask-collectd1]
+REGEX = ^([^_]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$1
+
+[mask-collectd2]
+REGEX = ^([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$2.$1
+
+[mask-collectd3]
+REGEX = ^([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$3.$2.$1
+
+[mask-collectd4]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$4.$3.$2.$1
+
+[mask-collectd5]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$5.$4.$3.$2.$1
+
+[mask-collectd6]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$6.$5.$4.$3.$2.$1
+
+[mask-collectd7]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$7.$6.$5.$4.$3.$2.$1
+
+[mask-collectd8]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$8.$7.$6.$5.$4.$3.$2.$1
+
+[mask-collectd9]
+REGEX = ^([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_]+)_([^_.]+)\..+\..+\s.+\s.+
+DEST_KEY = MetaData:Host
+FORMAT =  host::$9.$8.$7.$6.$5.$4.$3.$2.$1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;bonus-collectd-to-splunk-csv-monitor&quot;&gt;Bonus: Collectd to Splunk CSV monitor&lt;/h1&gt;
+
+&lt;h2 id=&quot;workflow-2&quot;&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;[System] -&amp;gt; [Splunk HF Monitor] -&amp;gt; [Splunk Indexer]&lt;/p&gt;
+
+&lt;h3 id=&quot;collectd-csv-plugin-usrlocallibcollectdpythonpython_csv_pluginpy&quot;&gt;collectd csv plugin (/usr/local/lib/collectd/python/python_csv_plugin.py)&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;collectd&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;COLLECTD_METRCIS_LOG&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/var/log/collectd-metrics.log&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ObjConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;collectd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Configuring'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;collectd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Initialization'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+      &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; \
+                &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; \
+                &lt;span class=&quot;n&quot;&gt;vl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plugin_instance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; \
+                &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+      &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COLLECTD_METRCIS_LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'a+'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;csvfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;csvfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;collectd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;register_config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;collectd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;register_init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;collectd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;register_write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;etccollectddcsvconf&quot;&gt;/etc/collectd.d/csv.conf&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadPlugin python
+
+&amp;lt;Plugin python&amp;gt;
+  ModulePath &quot;/usr/local/lib/collectd/python&quot;
+  LogTraces true
+  Interactive false
+  Import python_csv_plugin
+  &amp;lt;Module python_csv_plugin&amp;gt;
+  &amp;lt;/Module&amp;gt;
+&amp;lt;/Plugin&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Log Sample (/var/log/collectd-metrics.log):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1515962589.16,system,processes,ps_rss,collectd,12378112.0
+1515962589.16,system,processes,ps_vm,collectd,1015365632.0
+1515962589.16,system,processes,ps_stacksize,collectd,2176.0
+1515962589.16,system,processes,ps_cputime,collectd,600000
+1515962589.16,system,processes,ps_cputime,collectd,1150000
+1515962589.16,system,processes,ps_code,collectd,15937536.0
+1515962589.16,system,processes,ps_pagefaults,collectd,11078
+1515962589.16,system,processes,ps_pagefaults,collectd,0
+1515962589.16,system,processes,io_octets,collectd,2785618
+1515962589.16,system,processes,io_octets,collectd,503948
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;refs&quot;&gt;Refs&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://splunkbase.splunk.com/app/2875/&quot;&gt;Collectd App for Splunk Enterprise&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://docs.splunk.com/Documentation/AddOns/released/Linux/Configure&quot;&gt;Configure Collectd to send data to Splunk&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.splunk.com/blog/2013/07/26/getting-data-from-collectd-into-splunk.html&quot;&gt;Getting Data from Collectd or Graphite into Splunk&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://splunkbase.splunk.com/app/3777/&quot;&gt;Analytics for Linux&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+   </entry>
    
    <entry>
       <title>Test Ansible Roles using molecule and goss</title>
